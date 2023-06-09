@@ -1,4 +1,2 @@
-2
-992.00
-Pão;1;1.50;11
-Queijo;2;4.00;3
+nome: banana, codigo: 123456, preco: 5.00, quantidade: 1 
+nome: chocolate, codigo: 123455, preco: 5.00, quantidade: 4 
