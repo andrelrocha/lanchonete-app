@@ -40,6 +40,8 @@ int lerMantimento() {
     fclose(arquivo);
 }
 
+//ANALISAR QUESTÃO DO SALDO E MUDANÇA (TALVEZ POR O SALDO EM UM ARQUIVO SEPARADO AO INVÉS DA VARIÁVEL??!!)
+
 void alterarMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
     FILE *temporario = fopen("temporario.txt", "w");
@@ -50,13 +52,13 @@ void alterarMantimento(char *nome) {
     float precoMantimento;
     int qtdMantimento;
 
-    printf("Digite o codigo do mantimento %s: ", nome);
+    printf("Digite o codigo do mantimento %s: \n", nome);
     scanf("%d", &codigoMantimento);
 
-    printf("Digite o preco do mantimento %s: ", nome);
+    printf("Digite o preco do mantimento %s: \n", nome);
     scanf("%f", &precoMantimento);
 
-    printf("Digite a quantidade de mantimentos %s: ", nome);
+    printf("Digite a quantidade de mantimentos %s: \n", nome);
     scanf("%d", &qtdMantimento);
 
     
@@ -84,7 +86,29 @@ void alterarMantimento(char *nome) {
     
 }
 
+void removerMantimento(char *nome) {
+    FILE *arquivo = fopen("estoque.txt", "r");
+    FILE *temporario = fopen("temporario.txt", "w");
 
+    char linha[1000];
+    
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            continue;
+        }
+        
+        fputs(linha, temporario);
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    remove("estoque.txt");
+    rename("temporario.txt", "estoque.txt");
+}
 
 
 
@@ -129,6 +153,11 @@ void main() {
         printf("Digite o nome do mantimento a ser alterado: ");
         scanf(" %s", &nomeMantimento);
         alterarMantimento(nomeMantimento);
+        break;
+    case 4:
+        printf("Digite o nome do mantimento a ser removido: ");
+        scanf(" %s", &nomeMantimento);
+        removerMantimento(nomeMantimento);
         break;
     default:
         break;

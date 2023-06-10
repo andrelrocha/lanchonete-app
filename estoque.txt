@@ -1,3 +1,3 @@
-nome: cocaina, codigo: 23, preco: 60.000000, quantidade: 1 
-nome: abacaxi, codigo: 56, preco: 2.000000, quantidade: 50 
-nome: maconha, codigo: 25, preco: 10.00, quantidade: 5 
+nome: lolo, codigo: 24, preco: 8.00, quantidade: 10 
+nome: abacaxi, codigo: 20, preco: 1.00, quantidade: 10 
+nome: maconha, codigo: 20, preco: 2.00, quantidade: 1 
