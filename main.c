@@ -21,7 +21,7 @@ int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, in
     } else {
         FILE *arquivo = fopen("estoque.txt", "a");
 
-        fprintf(arquivo, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigo, preco, quantidade);
+        fprintf(arquivo, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigo, preco, quantidade);
                     
         fclose(arquivo);
         return saldo - ((preco)*quantidade);
@@ -54,12 +54,12 @@ void alterarMantimento(char *nome) {
     scanf("%d", &codigoMantimento);
 
     printf("Digite o preco do mantimento %s: ", nome);
-    scanf("%.2f", &precoMantimento);
+    scanf("%f", &precoMantimento);
 
     printf("Digite a quantidade de mantimentos %s: ", nome);
     scanf("%d", &qtdMantimento);
 
-    /*
+    
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
         
         char nomeComparacao[50];
@@ -70,10 +70,10 @@ void alterarMantimento(char *nome) {
         }
         
         fputs(linha, temporario);
-        fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
 
     }
-    */
+        fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
+    
 
 
     fclose(arquivo);
@@ -118,7 +118,7 @@ void main() {
         scanf(" %d", &codigoMantimento);
 
         printf("Digite o preco do mantimento: ");
-        scanf(" %.2f", &precoMantimento);
+        scanf(" %f", &precoMantimento);
 
         printf("Digite a quantidade de mantimentos: ");
         scanf(" %d", &qtdMantimento);
