@@ -7,7 +7,7 @@ Somente o arquivo main.C é o código correto, o resto é rascunho que eu uso pa
 
 ## Capacidade de manipulação (adição, remoção, edição e visualização) de um estoque de mantimentos. ✅
 • Cada mantimento deve possuir nome, código, preço e quantidade. ✅
-• É possível comprar ingredientes para o estoque apenas se a lanchonete tiver saldo suficiente para pagar o preço deles. 
+• É possível comprar ingredientes para o estoque apenas se a lanchonete tiver saldo suficiente para pagar o preço deles. ✅ 
 
 ```
 falta alterar saldo para um arquivo próprio e questão do app só adicionar uma nova linha se não encontrar linha com o mesmo nome
