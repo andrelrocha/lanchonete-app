@@ -24,7 +24,7 @@ void checaNome(char *nome) {
     fclose(arquivo);
 
     if(encontrado==1) {
-        printf("O mantimento ja esta cadastrado em nosso database, por favor selecione a opcao de edicao!");
+        printf("O mantimento ja esta cadastrado e=[database, por favor selecione a opcao de edicao!");
         exit(1); 
     }
 }
