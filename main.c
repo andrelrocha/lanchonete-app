@@ -1,17 +1,41 @@
-/*
-Capacidade de manipulação (adição, remoção, edição e visualização) de um estoque de
-mantimentos.
-• Cada mantimento deve possuir nome, código, preço e quantidade.
-• É possível comprar ingredientes para o estoque apenas se a lanchonete tiver saldo
-suficiente para pagar o preço deles.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define ARQUIVO_ESTOQUE "estoque.txt"
 
+void checaTxt(FILE* f) {
+    if (f == 0) {
+        printf("Desculpe, database nao disponivel no momento.\n\n");
+        exit(1); 
+    }
+}
+
+void editarSaldo(float saldo) {
+    FILE *arquivo = fopen("saldo.txt", "r+");
+    checaTxt(arquivo);
+
+    //transforma o inteiro em char para ser passado para fputs
+    char saldoEmString[20];
+    snprintf(saldoEmString, sizeof(saldoEmString), "%f", saldo);
+
+    rewind(arquivo);
+    fputs(saldoEmString, arquivo);
+    fclose(arquivo);
+}
+
+float retornaSaldo() {
+    FILE *arquivo = fopen("saldo.txt", "r");
+    checaTxt(arquivo);
+
+    char linha[20];
+    fgets(linha, sizeof(linha), arquivo);
+
+    float saldo = atof(linha);
+
+    fclose(arquivo);
+    return saldo;
+}
 
 int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, int quantidade) {
 
@@ -20,16 +44,22 @@ int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, in
         return 0;
     } else {
         FILE *arquivo = fopen("estoque.txt", "a");
+        checaTxt(arquivo);
+        
 
         fprintf(arquivo, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigo, preco, quantidade);
                     
         fclose(arquivo);
-        return saldo - ((preco)*quantidade);
+
+        editarSaldo(saldo - ((preco)*quantidade));
     }
+
+    //ADICIONAR QUESTÃO DE EDIÇÃO SOMENTE DA QUANTIDADE { O MANTIMENTO DESEJADO JÁ EXISTE EM NOSSo DATABASE, POR FAVOR }
 }
 
 int lerMantimento() {
     FILE *arquivo = fopen("estoque.txt", "r");
+    checaTxt(arquivo);
 
     char linha[1000];
     
@@ -44,6 +74,8 @@ int lerMantimento() {
 
 void alterarMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
+    checaTxt(arquivo);
+
     FILE *temporario = fopen("temporario.txt", "w");
 
     char linha[1000];
@@ -88,6 +120,8 @@ void alterarMantimento(char *nome) {
 
 void removerMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
+    checaTxt(arquivo);
+
     FILE *temporario = fopen("temporario.txt", "w");
 
     char linha[1000];
@@ -117,7 +151,7 @@ void removerMantimento(char *nome) {
 
 void main() {
 
-    float saldo = 1000.0;
+    float saldo = retornaSaldo();
     int escolha;
 
     char nomeMantimento[50];
