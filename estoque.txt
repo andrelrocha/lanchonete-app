@@ -1,3 +1,3 @@
-nome: lolo, codigo: 24, preco: 8.00, quantidade: 10 
 nome: abacaxi, codigo: 20, preco: 1.00, quantidade: 10 
-nome: maconha, codigo: 20, preco: 2.00, quantidade: 1 
+nome: limao, codigo: 520, preco: 5.000000, quantidade: 1 
+nome: abacate, codigo: 420, preco: 4.50, quantidade: 20 
