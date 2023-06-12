@@ -37,7 +37,31 @@ float retornaSaldo() {
     return saldo;
 }
 
-int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, int quantidade) {
+void checaNome(char *nome) {
+    FILE *arquivo = fopen("estoque.txt", "r");
+    checaTxt(arquivo);
+
+    int encontrado = 0;
+
+    char linha[1000];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            encontrado = 1;
+        }
+    }
+
+    fclose(arquivo);
+
+    if(encontrado==1) {
+        printf("O mantimento ja esta cadastrado em nosso database, por favor selecione a opcao de edicao!");
+        exit(1); 
+    }
+}
+
+int adicionarMantimento(int saldo, char *nome, int codigo, float preco, int quantidade) {
 
     if (saldo - (preco*quantidade) < 0) {
         printf("Saldo insuficiente para pagar o mantimento!\n");
@@ -45,7 +69,6 @@ int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, in
     } else {
         FILE *arquivo = fopen("estoque.txt", "a");
         checaTxt(arquivo);
-        
 
         fprintf(arquivo, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigo, preco, quantidade);
                     
@@ -53,8 +76,6 @@ int adicionarMantimento(int saldo, const char *nome, int codigo, float preco, in
 
         editarSaldo(saldo - ((preco)*quantidade));
     }
-
-    //ADICIONAR QUESTÃO DE EDIÇÃO SOMENTE DA QUANTIDADE { O MANTIMENTO DESEJADO JÁ EXISTE EM NOSSo DATABASE, POR FAVOR }
 }
 
 int lerMantimento() {
@@ -171,6 +192,7 @@ void main() {
     case 2: 
         printf("Digite o nome do mantimento: ");
         scanf(" %s", nomeMantimento);
+        checaNome(nomeMantimento);
 
         printf("Digite o codigo do mantimento: ");
         scanf(" %d", &codigoMantimento);
@@ -194,6 +216,7 @@ void main() {
         removerMantimento(nomeMantimento);
         break;
     default:
+        printf("Selecione uma opcao valida.");
         break;
     }
 }
