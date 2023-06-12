@@ -29,11 +29,11 @@ void checaNome(char *nome) {
     }
 }
 
-int adicionarMantimento(int saldo, char *nome, int codigo, float preco, int quantidade) {
+void adicionarMantimento(int saldo, char *nome, int codigo, float preco, int quantidade) {
 
     if (saldo - (preco*quantidade) < 0) {
         printf("Saldo insuficiente para pagar o mantimento!\n");
-        return 0;
+        return;
     } else {
         FILE *arquivo = fopen("estoque.txt", "a");
         checaTxt(arquivo);
@@ -46,7 +46,7 @@ int adicionarMantimento(int saldo, char *nome, int codigo, float preco, int quan
     }
 }
 
-int lerMantimento() {
+void lerMantimento() {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
 
