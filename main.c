@@ -91,8 +91,6 @@ int lerMantimento() {
     fclose(arquivo);
 }
 
-//ANALISAR QUESTÃO DO SALDO E MUDANÇA (TALVEZ POR O SALDO EM UM ARQUIVO SEPARADO AO INVÉS DA VARIÁVEL??!!)
-
 void alterarMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
@@ -121,14 +119,36 @@ void alterarMantimento(char *nome) {
         snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
         
         if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            int qtdAntigo;
+            float precoAntigo;
+            
+            //checa para conferir se na mudança de qtd e preco, se há uma diminuição do saldo
+            if (sscanf(linha, "nome: %*[^,], codigo: %*d, preco: %f, quantidade: %d", &precoAntigo, &qtdAntigo) == 2) {
+                float novoValor = precoMantimento*qtdMantimento;
+                float antigoValor = precoAntigo*qtdAntigo;
+
+                if (novoValor > antigoValor) {
+                    float saldoAtual = retornaSaldo();
+                    float diferencaSaldo = novoValor - antigoValor;
+
+                    float saldoFinal = saldoAtual - diferencaSaldo;
+
+                    if(saldoFinal < 0) {
+                        printf("Saldo insuficiente para pagar o mantimento!\n");
+                        exit(1);
+                    }
+
+                    editarSaldo(saldoFinal);
+                }
+            }
+            
             continue;
         }
         
         fputs(linha, temporario);
 
     }
-        fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
-    
+    fprintf(temporario, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
 
 
     fclose(arquivo);
@@ -164,12 +184,13 @@ void removerMantimento(char *nome) {
     remove("estoque.txt");
     rename("temporario.txt", "estoque.txt");
 }
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////
 void main() {
 
     float saldo = retornaSaldo();
