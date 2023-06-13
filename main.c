@@ -52,6 +52,9 @@ void main() {
         scanf(" %s", &nomeMantimento);
         removerMantimento(nomeMantimento);
         break;
+    case 5: 
+        realizarPedido("baiao");
+        break;
     default:
         printf("Selecione uma opcao valida.");
         break;
