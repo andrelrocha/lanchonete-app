@@ -2,7 +2,8 @@
 
 #define PEDIDO_H
 
-void realizarPedido();
-void checaEstoque();
+void checaEstoque(char igredientes[],  int tamanho);
+void realizarPedido(char *pedido);
+int contarVirgulas(char *str);
 
 #endif

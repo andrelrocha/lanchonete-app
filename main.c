@@ -17,8 +17,10 @@ void main() {
     float precoMantimento;
     int qtdMantimento;
 
+    char nomePrato[50];
+
     printf("Qual operacao voce deseja realizar?\n");
-    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n");
+    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n");
     scanf(" %d", &escolha);
 
     switch (escolha)
@@ -53,7 +55,9 @@ void main() {
         removerMantimento(nomeMantimento);
         break;
     case 5: 
-        realizarPedido("baiao");
+        printf("Digite o nome do prato do pedido: ");
+        scanf(" %s", &nomePrato);
+        realizarPedido(nomePrato);
         break;
     default:
         printf("Selecione uma opcao valida.");
