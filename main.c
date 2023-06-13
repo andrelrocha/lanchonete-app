@@ -4,6 +4,7 @@
 
 #include "estoque.h"
 #include "geral.h"
+#include "pedido.h"
 
 
 void main() {
@@ -55,4 +56,7 @@ void main() {
         printf("Selecione uma opcao valida.");
         break;
     }
+
+    //PARTE DE registrar um pedido feito por um cliente, contendo as comidas e suas respectivas quantidades.
+    //PRECISA RECEBER COMO PARAMETRO O ARRAY EM CARDAPIO.C
 }
