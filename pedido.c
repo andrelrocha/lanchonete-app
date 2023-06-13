@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "geral.h"
 
@@ -10,22 +11,60 @@ Capacidade de registrar um pedido feito por um cliente, contendo as comidas e su
 */
 
 void realizarPedido(char *pedido) {
+    FILE *arquivo = fopen("cardapio.txt", "r");
+    checaTxt(arquivo);
+
+    FILE *arquivoDestino = fopen("pedido.txt", "a");
+    checaTxt(arquivoDestino);
+    
+    int qtdIngredientes = 0;
+    char listaIngredientes[100];
+
+    char linha[1000];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomePedido[50];
+        snprintf(nomePedido, sizeof(nomePedido), "nome: %s", pedido);
+        
+        if (strncmp(linha, nomePedido, strlen(nomePedido)) == 0) {
+            sscanf(linha, "lista: [%[^]]", listaIngredientes);
+            
+            int tamanhoVetor = contarVirgulas(listaIngredientes) + 1;
+
+            char vetor[tamanhoVetor][100];
+
+            char *token;
+            token = strtok(listaIngredientes, ",");
+            int index = 0;
+            while (token != NULL && index < tamanhoVetor) {
+                strcpy(vetor[index], token);
+                token = strtok(NULL, ",");
+                index++;
+            }
+        
+        checaEstoque(vetor,tamanhoVetor);
+
+        fprintf(arquivoDestino, "Pedido feito de %s, com os seguintes igredientes: ", pedido);
+        for (int j = 0; j < tamanhoVetor; j++) {
+            fprintf(arquivoDestino, ", %s", vetor[j]);
+        }
+        fprintf(arquivoDestino,"\n");
+        }
+    }
+
+    fclose(arquivo);
+    fclose(arquivoDestino);
     
     
-    
-    
-    //comidas e quantidades { puxar info do cardápio, pedido.txt }
-    //conferir no estoque.txt se todos os igredientes existem no estoque
 
 
+
+    //comidas e quantidades { puxar info do cardápio }
 
 
     //calcular o preço { puxar preco do cardapio.txt } { puxar preco de todos os mantimentos }
     //deve adicionar o saldo.txt a partir do lucro
 
     //registrar em custo.txt o custo de cada pedido
-
-    //nome: baiao, codigo: 123, preco: 20.0, lista: [arroz,feijao]
 
 }
 
@@ -60,4 +99,14 @@ void checaEstoque(char igredientes[],  int tamanho) {
     }
 
     fclose(arquivo);
+}
+
+int contarVirgulas(char *str) {
+    int contador = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ',') {
+            contador++;
+        }
+    }
+    return contador;
 }
