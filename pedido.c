@@ -10,64 +10,6 @@ Capacidade de registrar um pedido feito por um cliente, contendo as comidas e su
 • Uma comida só pode ser preparada se todos os seus ingredientes estiverem disponíveis no estoque. • O sistema deve calcular o preço de venda das comidas, que será o lucro. • O sistema deve registrar o custo total dos mantimentos utilizados em cada porção da comida pedida.
 */
 
-void realizarPedido(char *pedido) {
-    FILE *arquivo = fopen("cardapio.txt", "r");
-    checaTxt(arquivo);
-
-    FILE *arquivoDestino = fopen("pedido.txt", "a");
-    checaTxt(arquivoDestino);
-    
-    int qtdIngredientes = 0;
-    char listaIngredientes[100];
-
-    char linha[1000];
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char nomePedido[50];
-        snprintf(nomePedido, sizeof(nomePedido), "nome: %s", pedido);
-        
-        if (strncmp(linha, nomePedido, strlen(nomePedido)) == 0) {
-            sscanf(linha, "lista: [%[^]]", listaIngredientes);
-            
-            int tamanhoVetor = contarVirgulas(listaIngredientes) + 1;
-
-            char vetor[tamanhoVetor][100];
-
-            char *token;
-            token = strtok(listaIngredientes, ",");
-            int index = 0;
-            while (token != NULL && index < tamanhoVetor) {
-                strcpy(vetor[index], token);
-                token = strtok(NULL, ",");
-                index++;
-            }
-        
-        checaEstoque(vetor,tamanhoVetor);
-
-        fprintf(arquivoDestino, "Pedido feito de %s, com os seguintes igredientes: ", pedido);
-        for (int j = 0; j < tamanhoVetor; j++) {
-            fprintf(arquivoDestino, ", %s", vetor[j]);
-        }
-        fprintf(arquivoDestino,"\n");
-        }
-    }
-
-    fclose(arquivo);
-    fclose(arquivoDestino);
-    
-    
-
-
-
-    //comidas e quantidades { puxar info do cardápio }
-
-
-    //calcular o preço { puxar preco do cardapio.txt } { puxar preco de todos os mantimentos }
-    //deve adicionar o saldo.txt a partir do lucro
-
-    //registrar em custo.txt o custo de cada pedido
-
-}
-
 void checaEstoque(char igredientes[],  int tamanho) {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
@@ -91,8 +33,11 @@ void checaEstoque(char igredientes[],  int tamanho) {
         fseek(arquivo, 0, SEEK_SET);
     }
 
+
+    // FALTA EDITAR A QUANTIDADE DE MANTIMENTOS E PRIMEIRO VER SE PODE OU NÃO FAZER O PRATO
+
     if (igredientesExistentes == tamanho) {
-        printf("Todos os igredientes estao presentes no estoque");
+        printf("Todos os igredientes estao presentes no estoque.");
     } else {
         printf("Nem todos os igredientes estao presentes no estoque.\nImpossivel preparar o prato solicitado.");
         exit(1);
@@ -109,4 +54,102 @@ int contarVirgulas(char *str) {
         }
     }
     return contador;
+}
+
+void realizarPedido(char *pedido) {
+    FILE *arquivo = fopen("cardapio.txt", "r");
+    checaTxt(arquivo);
+
+    FILE *arquivoPedido = fopen("pedido.txt", "a");
+    checaTxt(arquivoPedido);
+
+    FILE *arquivoCustoPedido = fopen("custoPedido.txt", "a");
+    checaTxt(arquivoCustoPedido);
+    
+
+    char listaIngredientesString[100];
+
+    char linha[1000];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomePedido[50];
+        snprintf(nomePedido, sizeof(nomePedido), "nome: %s", pedido);
+        
+        if (strncmp(linha, nomePedido, strlen(nomePedido)) == 0) {
+            //MANIPULANDO OS INGREDIENTES
+            sscanf(linha, "lista: [%[^]]", listaIngredientesString);
+
+            int tamanhoVetor = contarVirgulas(listaIngredientesString) + 1;
+
+            char vetorIngredientes[tamanhoVetor][100];
+
+            char *token;
+            token = strtok(listaIngredientesString, ",");
+            int index = 0;
+            while (token != NULL && index < tamanhoVetor) {
+                strcpy(vetorIngredientes[index], token);
+                token = strtok(NULL, ",");
+                index++;
+            }
+        
+            checaEstoque(vetorIngredientes,tamanhoVetor);
+
+            //MANIPULANDO A QUANTIDADE
+            int qtdIngredientes[tamanhoVetor];
+            sscanf(linha, "qtd: <%[^>]", qtdIngredientes);
+            char *token2;
+            token2 = strtok(qtdIngredientes, ",");
+            index = 0;
+            while (token2 != NULL && index < tamanhoVetor) {
+                strcpy(vetorIngredientes[index], token2);
+                token2 = strtok(NULL, ",");
+                index++;
+            }
+
+            //MANIPULANDO PRECO E QUANTIDADE DE MANTIMENTOS
+            float custoPrato = 0;
+            FILE *arquivoEstoque = fopen("estoque.txt", "r");
+            checaTxt(arquivoEstoque);
+            for (int i = 0; i < tamanhoVetor; i++) {
+
+                float precoMantimento = 0;
+
+                char linha2[1000];
+                while (fgets(linha2, sizeof(linha2), arquivoEstoque) != NULL) {
+                    char nomePedido[50];
+                    snprintf(nomePedido, sizeof(nomePedido), "nome: %s", vetorIngredientes[i]);
+                    
+                    if (strncmp(linha2, nomePedido, strlen(nomePedido)) == 0) {
+                        sscanf(linha2, "preco: %f", &precoMantimento);
+                    }
+                
+                custoPrato+= precoMantimento * qtdIngredientes[i];
+                }
+            }
+
+            fprintf(arquivoCustoPedido, "Pedido feito de %s, custando: R$ %f", pedido, custoPrato);
+            fclose(arquivoEstoque);
+
+            //MANIPULANDO SALDO 
+            float precoPrato = 0;
+            sscanf(linha, "preco: %f", &precoPrato);
+            float lucro = precoPrato - custoPrato;
+
+            float saldo = retornaSaldo();
+            editarSaldo(saldo+lucro);
+
+            fprintf(arquivoPedido, "Pedido feito de %s, com os seguintes igredientes: ", pedido);
+            for (int j = 0; j < tamanhoVetor; j++) {
+                if(qtdIngredientes[j] == 1) {
+                    fprintf(arquivoPedido, "1 unidade de %s ", vetorIngredientes[j]);
+                } else {
+                    fprintf(arquivoPedido, "%d unidades de %s", qtdIngredientes[j], vetorIngredientes[j]);
+                }
+            }
+            fprintf(arquivoPedido,"\n");
+        }
+    }
+
+    fclose(arquivo);
+    fclose(arquivoPedido);
+    fclose(arquivoCustoPedido);
 }
