@@ -5,41 +5,27 @@
 
 #include "geral.h"
 #include "estoque.h"
-/*
-void checaEstoque(char **igredientes,  int tamanho) {
+
+int checaEstoque(char *ingrediente) {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
 
-    int igredientesExistentes = 0;
+    char linha[1000];
+    fseek(arquivo, 0, SEEK_SET);  // redefine o ponteiro de leitura para o início do arquivo
 
-    for(int i = 0; i < tamanho; i++) {
-        char *nomeIgrediente = igredientes[i];
-
-        char linha[1000];
-        while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-            char nomeProcurado[50];
-            snprintf(nomeProcurado, sizeof(nomeProcurado), "nome: %s", nomeIgrediente);
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomeProcurado[50];
+        snprintf(nomeProcurado, sizeof(nomeProcurado), "nome: %s", ingrediente);
         
-            if (strncmp(linha, nomeProcurado, strlen(nomeProcurado)) == 0) {
-                igredientesExistentes++;
-            }
+        if (strncmp(linha, nomeProcurado, strlen(nomeProcurado)) == 0) {
+            return 1;
         }
-        
-        //redefine o ponteiro de leitura para o início do arquivo antes de iniciar a próxima iteração do loop 
-        fseek(arquivo, 0, SEEK_SET);
     }
 
-
-    if (igredientesExistentes == tamanho) {
-        printf("Todos os igredientes estao presentes no estoque.");
-    } else {
-        printf("Nem todos os igredientes estao presentes no estoque.\nImpossivel preparar o prato solicitado.");
-        exit(1);
-    }
+    return 0;
 
     fclose(arquivo);
 }
-*/
 
 /*
 void consumirMantimentos(char **mantimentos, int quantidades[], int tamanho) {
@@ -127,7 +113,6 @@ void realizarPedido(char *pedido) {
             int tamanhoVetor = contarVirgulas(listaIngredientesString) + 1;
 
             char vetorIngredientes[tamanhoVetor][100];
-
             char *token;
             token = strtok(listaIngredientesString, ",");
             int index = 0;
@@ -136,8 +121,21 @@ void realizarPedido(char *pedido) {
                 token = strtok(NULL, ",");
                 index++;
             }
-        
-            //checaEstoque((char**)vetorIngredientes,tamanhoVetor); ------------------------------------------------------------------------------------
+
+                int armazenaContador = 0;
+                
+                for (int i = 0; i < tamanhoVetor; i++) {
+                    armazenaContador += checaEstoque(vetorIngredientes[i]);
+                    if (checaEstoque(vetorIngredientes[i]) == 0) {
+                        printf("O ingrediente %s nao esta presente no estoque.\nImpossivel preparar o prato solicitado.", vetorIngredientes[i]);
+                        exit(1);
+                    }
+                }
+
+                if (armazenaContador == tamanhoVetor) {
+                    printf("Todos os igredientes estao presentes no estoque.");
+                } 
+            
 
             //MANIPULANDO A QUANTIDADE
             char *inicioQtd = strstr(linha, "qtd: <");
@@ -152,7 +150,6 @@ void realizarPedido(char *pedido) {
             }
 
             char vetorQtdIngredientes[tamanhoVetor][100];
-
             char *token2;
             token2 = strtok(qtdIngredientesString, ",");
             index = 0;
