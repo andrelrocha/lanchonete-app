@@ -27,46 +27,6 @@ int checaEstoque(char *ingrediente) {
     fclose(arquivo);
 }
 
-/*
-void consumirMantimentos(char **mantimentos, int quantidades[], int tamanho) {
-    FILE *arquivo = fopen("estoque.txt", "r");
-    checaTxt(arquivo);
-
-    FILE *temporario = fopen("temporario.txt", "w");
-    
-    for (int j = 0; j < tamanho; j++) {
-        char linha[1000];
-        while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-            
-            char nomeComparacao[50];
-            snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", mantimentos[j]);
-            
-            if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
-                char nomeMantimento[100];
-                int codigoMantimento;
-                float precoMantimento;
-                int qtdAntigo;
-                sscanf(linha, "nome: %s, codigo: %d, preco: %f, quantidade: %d", nomeMantimento, &codigoMantimento, &precoMantimento, &qtdAntigo);
-                int qtdNova = qtdAntigo - quantidades[j];
-                if (qtdNova == 0) {
-                    continue;
-                } else {
-                    fprintf(temporario, "nome: %s, codigo: %d, preco: %f, quantidade: %d", nomeMantimento, codigoMantimento, precoMantimento, qtdNova);
-                    continue;
-                }
-            }
-            fputs(linha, temporario);
-
-        }
-    }
-    fclose(arquivo);
-    fclose(temporario);
-
-    remove("estoque.txt");
-    rename("temporario.txt", "estoque.txt");
-}
-*/
-
 int contarVirgulas(char *str) {
     int contador = 0;
     for (int i = 0; str[i] != '\0'; i++) {
@@ -191,9 +151,6 @@ void realizarPedido(char *pedido) {
                 }
                 custoPrato+= precoMantimento * vetorQtdIngredientesInt[i];
             }
-
-            //consumirMantimentos((char**)vetorIngredientes, vetorQtdIngredientes, tamanhoVetor); ---------------------------------------------
-
         
             fprintf(arquivoCustoPedido, "Pedido feito de %s, custando: R$ %f\n", pedido, custoPrato);
             fclose(arquivoEstoque);
