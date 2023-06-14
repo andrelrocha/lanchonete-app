@@ -10,7 +10,7 @@
 • Cada comida possui um código, preço, nome e uma lista de mantimentos necessários para a cocção de cada uma.
 
 ## Capacidade de registrar um pedido feito por um cliente, contendo as comidas e suas respectivas quantidades. ✅ 
-• Uma comida só pode ser preparada se todos os seus ingredientes estiverem disponíveis no estoque.
+• Uma comida só pode ser preparada se todos os seus ingredientes estiverem disponíveis no estoque. ✅
 • O sistema deve calcular o preço de venda das comidas, que será o lucro. ✅ 
 • O sistema deve registrar o custo total dos mantimentos utilizados em cada porção da comida pedida. ✅ 
 
