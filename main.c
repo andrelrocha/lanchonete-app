@@ -5,6 +5,7 @@
 #include "estoque.h"
 #include "geral.h"
 #include "pedido.h"
+#include "capitalismo.h"
 
 
 void main() {
@@ -20,7 +21,7 @@ void main() {
     char nomePrato[50];
 
     printf("Qual operacao voce deseja realizar?\n");
-    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n");
+    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n6-prato mais lucrativo\n7-prato menos lucrativo ou com prejuizo\n");
     scanf(" %d", &escolha);
 
     switch (escolha)
@@ -55,10 +56,15 @@ void main() {
         removerMantimento(nomeMantimento);
         break;
     case 5: 
-        //printf("Digite o nome do prato do pedido: ");
-        //scanf(" %s", &nomePrato);
-        //realizarPedido(nomePrato);
-        realizarPedido("baiao");
+        printf("Digite o nome do prato do pedido: ");
+        scanf(" %s", &nomePrato);
+        realizarPedido(nomePrato);
+        break;
+    case 6:
+        pratoLula();
+        break;
+    case 7:
+        pratoBolsonaro();
         break;
     default:
         printf("Selecione uma opcao valida.");
