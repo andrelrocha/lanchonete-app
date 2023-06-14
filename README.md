@@ -15,9 +15,9 @@
 • O sistema deve registrar o custo total dos mantimentos utilizados em cada porção da comida pedida. ✅ 
 
 ## Geração de relatórios que mostrem o lucro ou prejuízo da lanchonete, além das seguintes informações:
-• Comida com a maior margem de lucro.
-• Comida com a menor margem de lucro ou prejuízo.
-• Se houver alguma comida impossível de ser feita devido à falta de algum mantimento específico, o sistema deve emitir um aviso.
+• Comida com a maior margem de lucro. ✅ 
+• Comida com a menor margem de lucro ou prejuízo. ✅ 
+• Se houver alguma comida impossível de ser feita devido à falta de algum mantimento específico, o sistema deve emitir um aviso. ✅ 
 
 1. Saldo inicial da lanchonete é de R$ 1000.
 2. Possibilidade de depositar e sacar dinheiro do negócio.
