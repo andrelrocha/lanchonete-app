@@ -55,15 +55,13 @@ void main() {
         removerMantimento(nomeMantimento);
         break;
     case 5: 
-        printf("Digite o nome do prato do pedido: ");
-        scanf(" %s", &nomePrato);
-        realizarPedido(nomePrato);
+        //printf("Digite o nome do prato do pedido: ");
+        //scanf(" %s", &nomePrato);
+        //realizarPedido(nomePrato);
+        realizarPedido("baiao");
         break;
     default:
         printf("Selecione uma opcao valida.");
         break;
     }
-
-    //PARTE DE registrar um pedido feito por um cliente, contendo as comidas e suas respectivas quantidades.
-    //PRECISA RECEBER COMO PARAMETRO O ARRAY EM CARDAPIO.C
 }
