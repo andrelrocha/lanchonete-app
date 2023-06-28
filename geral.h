@@ -7,5 +7,6 @@
 void checaTxt(FILE* f);
 void editarSaldo(float saldo);
 float retornaSaldo();
+int contarVirgulas(char *str);
 
 #endif

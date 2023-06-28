@@ -117,55 +117,81 @@ void removerRefeicaoCardapio(const char *nome) {
 void editarCardapio(char *nome) {
     FILE *arquivo = fopen("cardapio.txt", "r");
     checaTxt(arquivo);
-
     FILE *temporario = fopen("temporario.txt", "w");
-    checaTxt(arquivo);
+
+    char linha[1000];
+    int encontrado = 0;
+
+    while(fgets(linha, sizeof(linha),arquivo) != NULL) {
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if(encontrado == 0) {
+        printf("Prato %s nao encontrado.\n", nome);
+        exit(1);
+    }
+
+    rewind(arquivo);
 
     int codigoAlimento;
     float precoAlimento;
-    int qtdAlimento;
 
-    printf("Digite o novo codigo da refeição %s: \n", nome);
+    char qtdAlimentoStr[1000];
+    char listaAlimentosStr[1000];
+    
+    sscanf(linha, "nome: %*[^,], codigo: %*[^,], preco: %*[^,], lista: [%[^]]], qtd: <%[^>]>", listaAlimentosStr, qtdAlimentoStr);
+
+    int qtdAlimentosInt = contarVirgulas(qtdAlimentoStr) + 1;
+    
+    int qtdAlimentos[qtdAlimentosInt];
+
+    printf("Digite o novo codigo da refeicao %s: \n", nome);
     scanf("%d", &codigoAlimento);
 
-    printf("Digite o novo preco da refeição %s: \n", nome);
+    printf("Digite o novo preco da refeicao %s: \n", nome);
     scanf("%f", &precoAlimento);
 
-    printf("Digite a nova quantidade de pratos %s: \n", nome);
-    scanf("%d", &qtdAlimento);
-  
-    char linha[1000];
-  
-    int encontrado = 0;
+    printf("Os ingredientes para o prato %s sao: %s\n", nome, listaAlimentosStr);
+
+    for (int i = 0; i < qtdAlimentosInt; i++) {
+        printf("Digite a nova quantidade do ingrediente %d: \n", i+1);
+        scanf("%d", &qtdAlimentos[i]);
+    }
+
+    char qtdsString[1000];
+    qtdsString[0] = '\0';
+    for (int i = 0; i < qtdAlimentosInt; i++) {
+        char qtdString[10];
+        snprintf(qtdString, sizeof(qtdString), "%d", qtdAlimentos[i]);
+        strcat(qtdsString, qtdString);
+        if (i != qtdAlimentosInt - 1) {
+            strcat(qtdsString, ",");
+        }
+    }
 
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
         char nomeComparacao[50];
-        snprintf(nomeComparacao, sizeof(nomeComparacao), "Nome: %s", nome);
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
         
         if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
-        fprintf(temporario, "Nome: %s\nCódigo: %d\nPreço: %.2f\nQuantidade: %d\n\n", nome, codigoAlimento, precoAlimento, qtdAlimento);
-        encontrado = 1;
+            fprintf(temporario, "nome: %s,codigo: %d,preco: %.2f, lista: [%s], qtd: <%s>", nome, codigoAlimento, precoAlimento, listaAlimentosStr, qtdsString);
         } else {
-        fputs(linha, temporario);
-          }
+            fputs(linha, temporario);
+        }
     }
-  //falta alterar saldo
   
-   // Olhando se o alimento foi encontrado
-    if (encontrado) {
-        printf("Alimento %s alterado com sucesso!\n", nome);
-    } else {
-        printf("Alimento %s não encontrado.\n", nome);
-    }
-
-    // Fechando os arquivos aqui
+    printf("Alimento %s alterado com sucesso!\n", nome);
+    
     fclose(arquivo);
     fclose(temporario);
 
-    // Apaga o arquivo de cardápio
     remove("cardapio.txt");
-
-    // Troca de nome
     rename("temporario.txt", "cardapio.txt");
 }
 //------------------------------------------------------------------------------------------------------------
