@@ -84,30 +84,32 @@ void removerRefeicaoCardapio(const char *nome) {
     checaTxt(arquivo);
 
     FILE *temporario = fopen("temporario.txt", "w");
-    checaTxt(temporario);
 
-    int encontrado = 0;
+    int enc = 0;
 
     char linha[1000];
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        char *token = strtok(linha, ",");
-        if (token != NULL && strcmp(token, nome) == 0) {
-            encontrado = 1;
-        } else {
-            fputs(linha, temporario);
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            enc = 1;
+            continue;
         }
+        
+        fputs(linha, temporario);
     }
-    if (encontrado) {
-        printf("Alimento %s removido do cardápio.\n", nome);
+
+    if (enc == 0) {
+        printf("Prato nao encontrado.\n");
     } else {
-        printf("Alimento %s não encontrado no cardápio.\n", nome);
+        printf("Prato removido com sucesso.\n");
     }
 
     fclose(arquivo);
     fclose(temporario);
 
     remove("cardapio.txt");
-
     rename("temporario.txt", "cardapio.txt");
 }
   

@@ -76,6 +76,14 @@ void main() {
 
         adicionarRefeicao(nomePrato, codidoPrato, precoPrato);
         break;
+    case 7:
+        //
+        break;
+    case 8: 
+        printf("Digite o nome do prato a ser removido: ");
+        scanf(" %s", &nomePrato);
+        removerRefeicaoCardapio(nomePrato);
+        break;
     case 9: 
         printf("Digite o nome do prato do pedido: ");
         scanf(" %s", &nomePrato);
