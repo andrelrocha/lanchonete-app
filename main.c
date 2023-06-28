@@ -20,8 +20,10 @@ void main() {
 
     char nomePrato[50];
 
+    float financeiro = 0;
+
     printf("Qual operacao voce deseja realizar?\n");
-    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n6-prato mais lucrativo\n7-prato menos lucrativo ou com prejuizo\n");
+    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n6-informacoes financeiras\n7-depositar dinheiro\n8-sacar dinheiro\n9-sair\n");
     scanf(" %d", &escolha);
 
     switch (escolha)
@@ -61,10 +63,17 @@ void main() {
         realizarPedido(nomePrato);
         break;
     case 6:
-        pratoLula();
+        infoFinaceiras();
         break;
     case 7:
-        pratoBolsonaro();
+        printf("Quanto voce quer depositar: ");
+        scanf(" %f", &financeiro);
+        depositarDinheiro(financeiro);
+        break;
+    case 8:
+        printf("Quanto voce quer sacar: ");
+        scanf(" %f", &financeiro);
+        sacarDinheiro(financeiro);
         break;
     default:
         printf("Selecione uma opcao valida.");

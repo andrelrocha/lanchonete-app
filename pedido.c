@@ -41,6 +41,24 @@ void realizarPedido(char *pedido) {
     FILE *arquivo = fopen("cardapio.txt", "r");
     checaTxt(arquivo);
 
+    char linha[1000];
+    int encontrado = 0;
+    while(fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char nomePedido[50];
+        snprintf(nomePedido, sizeof(nomePedido), "nome: %s", pedido);
+        
+        if (strncmp(linha, nomePedido, strlen(nomePedido)) == 0) {
+            encontrado = 1;
+        }
+    }
+
+    if(encontrado == 0) {
+        printf("O prato nao esta presente no cardapio!");
+        exit(1);
+    }
+
+    rewind(arquivo);
+
     FILE *arquivoPedido = fopen("pedido.txt", "a");
     checaTxt(arquivoPedido);
 
@@ -51,7 +69,6 @@ void realizarPedido(char *pedido) {
     char listaIngredientesString[100];
     char qtdIngredientesString[100];
 
-    char linha[1000];
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
         char nomePedido[50];
         snprintf(nomePedido, sizeof(nomePedido), "nome: %s", pedido);
@@ -152,7 +169,7 @@ void realizarPedido(char *pedido) {
                 custoPrato+= precoMantimento * vetorQtdIngredientesInt[i];
             }
         
-            fprintf(arquivoCustoPedido, "Pedido feito de %s, custando: R$ %f\n", pedido, custoPrato);
+            fprintf(arquivoCustoPedido, "Pedido feito de %s, custando: R$ %.2f\n", pedido, custoPrato);
             fclose(arquivoEstoque);
 
             //MANIPULANDO SALDO 
@@ -171,7 +188,7 @@ void realizarPedido(char *pedido) {
             FILE *arquivoLucro = fopen("lucro.txt", "a");
             checaTxt(arquivoLucro);
             char lucroEmString[20];
-            snprintf(lucroEmString, sizeof(lucroEmString), "%f", lucro);
+            snprintf(lucroEmString, sizeof(lucroEmString), "%.2f", lucro);
             
             fprintf(arquivoLucro, "Lucro prato %s: R$ %s\n", pedido, lucroEmString);
             fclose(arquivoLucro);
