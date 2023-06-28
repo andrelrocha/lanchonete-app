@@ -1,5 +1,9 @@
 /*
 Geração de relatórios que mostrem o lucro ou prejuízo da lanchonete, além das seguintes informações:
+
+mostrar a diferença a partir do saldo
+
+chamar pratoLula e pratoBolsonaro
 */
 
 #include <stdio.h>
@@ -58,4 +62,53 @@ void pratoBolsonaro() {
     fclose(arquivo);
 
     printf("Prato com menor lucro: %s", pratoMenorLucro);
+}
+
+void infoFinaceiras() {
+    FILE *arquivo = fopen("saldo.txt", "r");
+    checaTxt(arquivo);
+
+    char linha[1000];
+    float saldo = retornaSaldo();
+
+    if (saldo > 1000) {
+        printf("Lucro da lanchonete: R$ %.2f\n", saldo-1000);
+    } else if (saldo < 1000) {
+        printf("Prejuizo da lanchonete: R$ %.2f\n", 1000-saldo);
+    } else {
+        printf("A lanchonete nao teve lucro nem prejuizo.\n");
+    }
+
+    fclose(arquivo);
+
+    pratoLula();
+    pratoBolsonaro();
+}
+
+void depositarDinheiro(int qtd) {
+    FILE *arquivo = fopen("saldo.txt","r+");
+    
+    float saldo = retornaSaldo();
+    
+    saldo += qtd;
+
+    editarSaldo(saldo);
+
+    printf("Novo saldo: R$ %.2f\n", saldo);
+
+    fclose(arquivo);
+}
+
+void sacarDinheiro(int qtd) {
+    FILE *arquivo = fopen("saldo.txt","r+");
+    
+    float saldo = retornaSaldo();
+    
+    saldo -= qtd;
+
+    editarSaldo(saldo);
+    
+    printf("Novo saldo: R$ %.2f\n", saldo);
+
+    fclose(arquivo);
 }

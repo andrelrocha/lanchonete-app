@@ -38,7 +38,7 @@ void adicionarMantimento(int saldo, char *nome, int codigo, float preco, int qua
         FILE *arquivo = fopen("estoque.txt", "a");
         checaTxt(arquivo);
 
-        fprintf(arquivo, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigo, preco, quantidade);
+        fprintf(arquivo, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigo, preco, quantidade);
                     
         fclose(arquivo);
 
@@ -63,9 +63,23 @@ void alterarMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
 
-    FILE *temporario = fopen("temporario.txt", "w");
-
     char linha[1000];
+    int encontrado = 0;
+    while(fgets(linha, sizeof(linha),arquivo) != NULL) {
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            encontrado = 1;
+        }
+    }
+
+    if(encontrado == 0) {
+        printf("Mantimento nao encontrado!\n");
+        exit(1);
+    }
+
+    FILE *temporario = fopen("temporario.txt", "w");
 
     int codigoMantimento;
     float precoMantimento;
@@ -116,7 +130,7 @@ void alterarMantimento(char *nome) {
         fputs(linha, temporario);
 
     }
-    fprintf(temporario, "nome: %s, codigo: %d, preco: %f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
+    fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
 
 
     fclose(arquivo);

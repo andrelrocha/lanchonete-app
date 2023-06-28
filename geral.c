@@ -14,7 +14,7 @@ void editarSaldo(float saldo) {
 
     // Transforma o float em uma string para ser gravada no arquivo
     char saldoEmString[20];
-    snprintf(saldoEmString, sizeof(saldoEmString), "%f", saldo);
+    snprintf(saldoEmString, sizeof(saldoEmString), "%.2f", saldo);
 
     rewind(arquivo);
     fputs(saldoEmString, arquivo);

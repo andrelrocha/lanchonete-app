@@ -4,5 +4,8 @@
 
 void pratoLula();
 void pratoBolsonaro();
+void infoFinaceiras();
+void depositarDinheiro(int qtd);
+void sacarDinheiro(int qtd);
 
 #endif
