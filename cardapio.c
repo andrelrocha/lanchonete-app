@@ -176,11 +176,12 @@ void editarCardapio(char *nome) {
     }
 
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+
         char nomeComparacao[50];
         snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
         
         if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
-            fprintf(temporario, "nome: %s,codigo: %d,preco: %.2f, lista: [%s], qtd: <%s>", nome, codigoAlimento, precoAlimento, listaAlimentosStr, qtdsString);
+            fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, lista: [%s], qtd: <%s>\n", nome, codigoAlimento, precoAlimento, listaAlimentosStr, qtdsString);
         } else {
             fputs(linha, temporario);
         }

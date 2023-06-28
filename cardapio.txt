@@ -1,0 +1,4 @@
+nome: baiao, codigo: 123, preco: 20.0, lista: [arroz,feijao], qtd: <2,1>
+nome: churrasco, codigo: 10, preco: 50.0, lista: [arroz,picanha,vinagrete,macaxeira], qtd: <2,1,1,5>
+nome: cafezinho, codigo: 10, preco: 2.00, lista: [leite,cafe], qtd: <1,1>
+nome: pizza, codigo: 54, preco: 40.00, lista: [massa,mussarela,peperoni], qtd: <1,1,10>
