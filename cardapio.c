@@ -25,41 +25,56 @@ void checaExistencia(char *nome) {
     fclose(arquivo);
 
     if(encontrado==1) {
-        printf("O item ja esta cadastrado no cardápio, por favor selecione a opcao de edicao!");
+        printf("O item ja esta cadastrado no cardapio, por favor selecione a opcao de edicao!");
         exit(1); 
     }
 }
-//-------------------------------------------------------------------------------------------------------------
 
-    void fazerRefeicao(int codigo, double preco, char nomes[][50], int quantidades[], int numIngredientes) {
+//-------------------------------------------------------------------------------------------------------------
+void adicionarRefeicao(char *nome, int codigo, float preco) {
     FILE *arquivo = fopen("cardapio.txt", "a");
     checaTxt(arquivo);
 
-    for (int i = 0; i < numIngredientes; i++) {
-        if (quantidades[i] <= 0) {
-            printf("Ingredientes insuficientes para fazer a refeição!\n");
-            return;
+    int esc = 0;
+    printf("Quantos ingredientes o prato possui?\n");
+    scanf(" %d", &esc);
+
+    char ingredientesNecessarios[esc][100];
+    for(int i = 0; i < esc; i++) {
+        printf("Digite o nome do ingrediente %d: \n", i+1);
+        scanf(" %s", ingredientesNecessarios[i]);
+    }
+
+    char ingredientesString[1000];
+    ingredientesString[0] = '\0';
+    for (int i = 0; i < esc; i++) {
+        strcat(ingredientesString, ingredientesNecessarios[i]);
+        if (i != esc - 1) {
+            strcat(ingredientesString, ",");
+        }
+    }   
+
+    char qtds[esc][100];
+    for(int i = 0; i < esc; i++) {
+        printf("Digite a quantidade do ingrediente %s: \n", ingredientesNecessarios[i]);
+        scanf(" %s", &qtds[i]);
+    }
+
+    char qtdsString[1000];
+    qtdsString[0] = '\0';
+    for (int i = 0; i < esc; i++) {
+        strcat(qtdsString, qtds[i]);
+        if (i != esc - 1) {
+            strcat(qtdsString, ",");
         }
     }
 
-    fprintf(arquivo, "Código: %d\n Preço: %.2f\n", codigo, preco);
-    for (int i = 0; i < numIngredientes; i++) {
-        fprintf(arquivo, "Nome: %s, Quantidade: %d\n", nomes[i], quantidades[i]);
-    }
-    
-    fclose(arquivo);
 
-}
-//-------------------------------------------------------------------------------------------------------------
-void adicionarRefeicao(char *nome, int codigo, float preco, char ingredientesNecessarios[], int qnt[]) {
-    FILE *arquivo = fopen("cardapio.txt", "a");
-    checaTxt(arquivo);
-
-    fprintf(arquivo, "Nome: %s\n Código: %d\n Preço: %.2f\n Ingredientes Necessários: %s\n Qnt: %d\n", nome, codigo, preco, ingredientesNecessarios, qnt);
+    fprintf(arquivo, "\nnome: %s, codigo: %d, preco: %.2f, lista: [%s], qtd: <%s>", nome, codigo, preco, ingredientesString, qtdsString);
 
     fclose(arquivo);
 
-    printf("Refeição adicionada ao cardápio.\n");
+    printf("Refeicao adicionada ao cardapio.\n");
 }
 
 
@@ -150,6 +165,7 @@ void editarCardapio(char *nome) {
 
     // Troca de nome
     rename("temporario.txt", "cardapio.txt");
+}
 //------------------------------------------------------------------------------------------------------------
 void visualizarCardapio() {
     FILE *arquivo = fopen("cardapio.txt", "r");

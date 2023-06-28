@@ -6,6 +6,7 @@
 #include "geral.h"
 #include "pedido.h"
 #include "capitalismo.h"
+#include "cardapio.h"
 
 
 void main() {
@@ -19,11 +20,13 @@ void main() {
     int qtdMantimento;
 
     char nomePrato[50];
+    int codidoPrato;
+    float precoPrato;
 
     float financeiro = 0;
 
     printf("Qual operacao voce deseja realizar?\n");
-    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-realizar pedido\n6-informacoes financeiras\n7-depositar dinheiro\n8-sacar dinheiro\n9-sair\n");
+    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-adicionar prato\n6-editar prato\n7-remover prato\n8-realizar pedido\n9-informacoes financeiras\n10-depositar dinheiro\n11-sacar dinheiro\n12-sair\n");
     scanf(" %d", &escolha);
 
     switch (escolha)
@@ -57,23 +60,41 @@ void main() {
         scanf(" %s", &nomeMantimento);
         removerMantimento(nomeMantimento);
         break;
-    case 5: 
+    case 5:
+        printf("Digite o nome do prato: ");
+        scanf(" %s", &nomePrato);
+        checaExistencia(nomePrato);
+
+        printf("Digite o codigo do prato: ");
+        scanf(" %d", &codidoPrato);
+
+        printf("Digite o preco do prato: ");
+        scanf(" %f", &precoPrato);
+
+        adicionarRefeicao(nomePrato, codidoPrato, precoPrato);
+        break;
+    
+    
+    case 8: 
         printf("Digite o nome do prato do pedido: ");
         scanf(" %s", &nomePrato);
         realizarPedido(nomePrato);
         break;
-    case 6:
+    case 9:
         infoFinaceiras();
         break;
-    case 7:
+    case 10:
         printf("Quanto voce quer depositar: ");
         scanf(" %f", &financeiro);
         depositarDinheiro(financeiro);
         break;
-    case 8:
+    case 11:
         printf("Quanto voce quer sacar: ");
         scanf(" %f", &financeiro);
         sacarDinheiro(financeiro);
+        break;
+    case 12:
+        exit(1);
         break;
     default:
         printf("Selecione uma opcao valida.");

@@ -3,7 +3,7 @@
 #define CARDAPIO_H
 
 void checaExistencia(char *nome);
-int adicionarRefeicao(int saldo, char *nome, int codigo, float preco, int quantidade);
+void adicionarRefeicao(char *nome, int codigo, float preco);
 int visualizarRefeicao();
 void alterarRefeicao(char *nome);
 void removerRefeicaoCardapio(char *nome);
