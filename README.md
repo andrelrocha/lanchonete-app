@@ -1,12 +1,16 @@
-# lanchonete-app { trabalho prog. algo }
+# lanchonete-app { trabalho progamação e algoritmos }
 
-**NÃO ALTEREM A BRANCH MAIN!!!!!!!**
+**Status do Projeto**
+*FINALIZADO*
+
+
 
 ## Capacidade de manipulação (adição, remoção, edição e visualização) de um estoque de mantimentos. ✅
 • Cada mantimento deve possuir nome, código, preço e quantidade. ✅
 • É possível comprar ingredientes para o estoque apenas se a lanchonete tiver saldo suficiente para pagar o preço deles. ✅ 
 
-## Capacidade de manipulação (adição, remoção, edição e visualização) de um cardápio de comidas.
+• O sistema deve calcular o preço de venda das comidas, que será o lucro. ✅ 
+## Capacidade de manipulação (adição, remoção, edição e visualização) de um cardápio de comidas. 
 • Cada comida possui um código, preço, nome e uma lista de mantimentos necessários para a cocção de cada uma. ✅
 
 ## Capacidade de registrar um pedido feito por um cliente, contendo as comidas e suas respectivas quantidades. ✅ 
