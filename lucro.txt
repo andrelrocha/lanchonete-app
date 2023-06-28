@@ -1,0 +1,18 @@
+baiao: R$ -15.000000
+baiao: R$ -15.000000
+baiao: R$ -15.000000
+baiao: R$ 5.000000
+churrasco: R$ 40.000000
+churrasco: R$ -0.500000
+churrasco: R$ 9.500000
+baiao: R$ 5.000000
+baiao: R$ 15.000000
+baiao: R$ 15.000000
+baiao: R$ 5.000000
+churrasco: R$ 9.500000
+baiao: R$ 5.000000
+baiao: R$ 5.000000
+baiao: R$ 5.000000
+baiao: R$ -10.000000
+baiao: R$ 6.000000Lucro prato churrasco: R$ -27.00
+Lucro prato baiao: R$ 16.00

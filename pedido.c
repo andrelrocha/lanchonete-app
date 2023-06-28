@@ -27,16 +27,6 @@ int checaEstoque(char *ingrediente) {
     fclose(arquivo);
 }
 
-int contarVirgulas(char *str) {
-    int contador = 0;
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == ',') {
-            contador++;
-        }
-    }
-    return contador;
-}
-
 void realizarPedido(char *pedido) {
     FILE *arquivo = fopen("cardapio.txt", "r");
     checaTxt(arquivo);

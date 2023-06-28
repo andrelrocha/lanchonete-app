@@ -62,6 +62,7 @@ void lerMantimento() {
 void alterarMantimento(char *nome) {
     FILE *arquivo = fopen("estoque.txt", "r");
     checaTxt(arquivo);
+    FILE *temporario = fopen("temporario.txt", "w");
 
     char linha[1000];
     int encontrado = 0;
@@ -79,7 +80,7 @@ void alterarMantimento(char *nome) {
         exit(1);
     }
 
-    FILE *temporario = fopen("temporario.txt", "w");
+    rewind(arquivo);
 
     int codigoMantimento;
     float precoMantimento;
@@ -125,13 +126,12 @@ void alterarMantimento(char *nome) {
             }
             
             continue;
-        }
-        
-        fputs(linha, temporario);
+        } 
+        fputs(linha, temporario);   
 
     }
-    fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
 
+    fprintf(temporario, "nome: %s, codigo: %d, preco: %.2f, quantidade: %d \n", nome, codigoMantimento, precoMantimento, qtdMantimento);
 
     fclose(arquivo);
     fclose(temporario);

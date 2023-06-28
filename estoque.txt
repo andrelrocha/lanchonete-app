@@ -1,0 +1,2 @@
+nome: arroz, codigo: 10, preco: 2.00, quantidade: 5 
+nome: feijao, codigo: 30, preco: 5.00, quantidade: 10 
