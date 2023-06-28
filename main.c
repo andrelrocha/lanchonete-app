@@ -26,7 +26,7 @@ void main() {
     float financeiro = 0;
 
     printf("Qual operacao voce deseja realizar?\n");
-    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-adicionar prato\n6-editar prato\n7-remover prato\n8-realizar pedido\n9-informacoes financeiras\n10-depositar dinheiro\n11-sacar dinheiro\n12-sair\n");
+    printf("1-visualizar estoque\n2-adicionar mantimento\n3-editar mantimento\n4-remover mantimento\n5-visualizar cardapio\n6-adicionar prato\n7-editar prato\n8-remover prato\n9-realizar pedido\n10-informacoes financeiras\n11-depositar dinheiro\n12-sacar dinheiro\n13-sair\n");
     scanf(" %d", &escolha);
 
     switch (escolha)
@@ -61,6 +61,9 @@ void main() {
         removerMantimento(nomeMantimento);
         break;
     case 5:
+        visualizarCardapio();
+        break;
+    case 6:
         printf("Digite o nome do prato: ");
         scanf(" %s", &nomePrato);
         checaExistencia(nomePrato);
@@ -73,27 +76,25 @@ void main() {
 
         adicionarRefeicao(nomePrato, codidoPrato, precoPrato);
         break;
-    
-    
-    case 8: 
+    case 9: 
         printf("Digite o nome do prato do pedido: ");
         scanf(" %s", &nomePrato);
         realizarPedido(nomePrato);
         break;
-    case 9:
+    case 10:
         infoFinaceiras();
         break;
-    case 10:
+    case 11:
         printf("Quanto voce quer depositar: ");
         scanf(" %f", &financeiro);
         depositarDinheiro(financeiro);
         break;
-    case 11:
+    case 12:
         printf("Quanto voce quer sacar: ");
         scanf(" %f", &financeiro);
         sacarDinheiro(financeiro);
         break;
-    case 12:
+    case 13:
         exit(1);
         break;
     default:
