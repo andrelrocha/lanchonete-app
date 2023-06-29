@@ -180,7 +180,7 @@ void realizarPedido(char *pedido) {
             char lucroEmString[20];
             snprintf(lucroEmString, sizeof(lucroEmString), "%.2f", lucro);
             
-            fprintf(arquivoLucro, "Lucro prato %s: R$ %s\n", pedido, lucroEmString);
+            fprintf(arquivoLucro, "%s: R$ %s\n", pedido, lucroEmString);
             fclose(arquivoLucro);
 
             fprintf(arquivoPedido, "Pedido feito de %s, com os seguintes ingredientes: ", pedido);
