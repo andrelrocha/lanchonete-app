@@ -6,7 +6,7 @@
 #include "geral.h"
 
 
-void pratoLula() {
+void pratoLucrativo() {
     FILE *arquivo = fopen("lucro.txt", "r");
     checaTxt(arquivo);
 
@@ -73,7 +73,7 @@ void infoFinaceiras() {
 
     fclose(arquivo);
 
-    pratoLula();
+    pratoLucrativo();
     pratoBolsonaro();
 }
 

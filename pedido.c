@@ -66,6 +66,7 @@ void realizarPedido(char *pedido) {
         if (strncmp(linha, nomePedido, strlen(nomePedido)) == 0) {
             
             //MANIPULANDO OS INGREDIENTES
+            /*procura pela substring "lista: [" e extrai a lista de ingredientes encontrada entre colchetes.*/
             char *inicioLista = strstr(linha, "lista: [");
             if (inicioLista != NULL) {
                 inicioLista += strlen("lista: [");
@@ -89,19 +90,19 @@ void realizarPedido(char *pedido) {
                 index++;
             }
 
-                int armazenaContador = 0;
+            int armazenaContador = 0;
                 
-                for (int i = 0; i < tamanhoVetor; i++) {
-                    armazenaContador += checaEstoque(vetorIngredientes[i]);
-                    if (checaEstoque(vetorIngredientes[i]) == 0) {
-                        printf("O ingrediente %s nao esta presente no estoque.\nImpossivel preparar o prato solicitado.", vetorIngredientes[i]);
-                        exit(1);
-                    }
+            for (int i = 0; i < tamanhoVetor; i++) {
+                armazenaContador += checaEstoque(vetorIngredientes[i]);
+                if (checaEstoque(vetorIngredientes[i]) == 0) {
+                    printf("O ingrediente %s nao esta presente no estoque.\nImpossivel preparar o prato solicitado.", vetorIngredientes[i]);
+                    exit(1);
                 }
+            }
 
-                if (armazenaContador == tamanhoVetor) {
-                    printf("Todos os igredientes estao presentes no estoque.");
-                } 
+            if (armazenaContador == tamanhoVetor) {
+                printf("Todos os igredientes estao presentes no estoque.");
+            } 
             
 
             //MANIPULANDO A QUANTIDADE
