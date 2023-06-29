@@ -1,11 +1,3 @@
-/*
-Geração de relatórios que mostrem o lucro ou prejuízo da lanchonete, além das seguintes informações:
-
-mostrar a diferença a partir do saldo
-
-chamar pratoLula e pratoBolsonaro
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +6,7 @@ chamar pratoLula e pratoBolsonaro
 #include "geral.h"
 
 
-void pratoLula() {
+void pratoLucrativo() {
     FILE *arquivo = fopen("lucro.txt", "r");
     checaTxt(arquivo);
 
@@ -81,7 +73,7 @@ void infoFinaceiras() {
 
     fclose(arquivo);
 
-    pratoLula();
+    pratoLucrativo();
     pratoBolsonaro();
 }
 

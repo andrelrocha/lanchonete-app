@@ -148,6 +148,22 @@ void removerMantimento(char *nome) {
     FILE *temporario = fopen("temporario.txt", "w");
 
     char linha[1000];
+    int encontrado = 0;
+    while(fgets(linha, sizeof(linha),arquivo) != NULL) {
+        char nomeComparacao[50];
+        snprintf(nomeComparacao, sizeof(nomeComparacao), "nome: %s", nome);
+        
+        if (strncmp(linha, nomeComparacao, strlen(nomeComparacao)) == 0) {
+            encontrado = 1;
+        }
+    }
+
+    if(encontrado == 0) {
+        printf("Mantimento nao encontrado!\n");
+        exit(1);
+    }
+
+    rewind(arquivo);
     
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
         char nomeComparacao[50];

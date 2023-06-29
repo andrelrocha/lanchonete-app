@@ -107,3 +107,6 @@ Pedido feito de baiao, custando: R$ 30.000000
 Pedido feito de baiao, custando: R$ 14.000000
 Pedido feito de churrasco, custando: R$ 77.00
 Pedido feito de baiao, custando: R$ 4.00
+Pedido feito de baiao, custando: R$ 9.00
+Pedido feito de baiao, custando: R$ 9.00
+Pedido feito de baiao, custando: R$ 9.00
